@@ -2,4 +2,6 @@
 
 Tecnologias utilizadas
 
-Apache 8, Servlets e armazenando dados em arquivo txt
+Apache 8, Servlets
+
+Sem banco de dados, apenas armazenando dados em arquivo txt.
