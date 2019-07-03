@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+ .inputDados {
+ 	margin-bottom: 10px;
+ }
+ body {
+ 	text-align: center;
+ }
+</style>
 <meta charset="ISO-8859-1">
 <title>Adicionar novo produto</title>
 </head>
 <body>
-	 <body>
+		<h2>PRODUTO - INCLUSAO DE PRODUTO </h2>
             <form action="adicionaProduto">
-                 Nome: <input type="text" name="nome" /><br />
-                 Preco: <input type="text" name="preco" /><br />
-                 Unidade: <input type="text" name="unidade" /><br />
-                 Quantidade: <input type="text" name="quantidade" /><br />
+                 Nome: <input type="text" name="nome" class="inputDados" /><br />
+                 Preco: <input type="text" name="preco" class="inputDados" /><br />
+                 Unidade: <input type="text" name="unidade" class="inputDados" /><br />
+                 Quantidade: <input type="text" name="quantidade" class="inputDados" /><br />
 
-                 <input type="submit" value="Gravar" />
-              </form>
-        </body>
+                 <input style="margin-top: 20px;" type="submit" value="Adicionar" />
+                 <a style="margin-left: 5px;" href="/TrabPoo/produto.html">Voltar</a>
+              </form>	
 </body>
 </html>

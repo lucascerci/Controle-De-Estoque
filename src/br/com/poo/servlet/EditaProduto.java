@@ -1,5 +1,6 @@
 package br.com.poo.servlet;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,6 +30,7 @@ public class EditaProduto extends HttpServlet {
 	Boolean isExiste = false;
 	String produtoEditado;
 	String produtoEditadoNome;
+	Produto produtoEditar = new Produto();
 	
 	 protected void service(HttpServletRequest request,	
              HttpServletResponse response)
@@ -36,17 +38,32 @@ public class EditaProduto extends HttpServlet {
 
          PrintWriter out = response.getWriter();
 
-         // pegando os parâmetros do request
-         String nome = request.getParameter("nome");
-         String preco = request.getParameter("preco");
-         String unidade = request.getParameter("unidade");
-         String quantidade = request.getParameter("quantidade");
+         if(!request.getParameter("nome").isEmpty()) {
+             String nome = request.getParameter("nome");
+             produtoEditar.setNome(nome);
+         }else {
+        	 out.println("<html>");
+             out.println("<body>");
+             out.println("<p>VocÃª precisa colocar o nome do produto a ser modificado.</p>");
+             out.println("<div><a href='/TrabPoo/editaProduto.html'>Voltar</a></div>");
+             out.println("</body>");
+             out.println("</html>");
+         }
          
-         Produto produtoEditar = new Produto();
-         produtoEditar.setNome(nome);
-         produtoEditar.setPreco(Double.parseDouble(preco));
-         produtoEditar.setUnidade(unidade);
-         produtoEditar.setQuantidade(Integer.parseInt(quantidade));
+         if(!request.getParameter("preco").isEmpty()) {
+             String preco = request.getParameter("preco");
+             produtoEditar.setPreco(Double.parseDouble(preco));
+         }
+         
+         if(!request.getParameter("unidade").isEmpty()) {
+             String unidade = request.getParameter("unidade");
+             produtoEditar.setUnidade(unidade);
+         }
+         
+         if(!request.getParameter("quantidade").isEmpty()) {
+             String quantidade = request.getParameter("quantidade");
+             produtoEditar.setQuantidade(Integer.parseInt(quantidade));
+         }
          
          txt = buscaProduto.buscaTxt();
         
@@ -61,12 +78,14 @@ public class EditaProduto extends HttpServlet {
         	 			if(produto != null){
         	 				String [] produtoAtributos = produto.split(";");
         	 				if(produtoAtributos != null && produtoAtributos.length != 0){
-        	 					String[] nomeProduto = produtoAtributos[0].toString().split(":");
-                	        	if(nomeProduto[1] != null && nomeProduto[1].equals(produtoEditar.getNome())){
-                	        		produtoEditadoNome = nomeProduto[1];
-                	        		produtoEditado = produto;
-                	        		isExiste = true;
-                	        	}
+        	 					if(produtoAtributos[0].indexOf(":") != -1){
+        	 						String[] nomeProduto = produtoAtributos[0].toString().split(":");
+        	 						if(nomeProduto[1] != null && nomeProduto[1].equals(produtoEditar.getNome())){
+                    	        		produtoEditadoNome = nomeProduto[1];
+                    	        		produtoEditado = produto;
+                    	        		isExiste = true;
+                    	        	}
+        	 					}
         	 				}
         	 			}
         	 		}
@@ -74,15 +93,60 @@ public class EditaProduto extends HttpServlet {
 	        }
          
          if(isExiste){
+        	 File txtOld = new File("banco.txt");
+        	 txtOld.delete();
         	 FileWriter arquivo = new FileWriter("banco.txt", true);
-        	 String[] txtEditado = txt.split("-" + produtoEditado + "-");
-        	 arquivo.write(txtEditado[0] + txtEditado[1]);
+        	 String [] produtoEditadoAtt = produtoEditado.split(";");
+        	 String novoPreco = null;
+        	 String novaQuantidade = null;
+        	 String novaUnidade =  null;
+        	 String novoProdutoEditado = null;
+        	 
+        	 if(produtoEditar.getPreco() != null){
+        		 String [] preco = produtoEditadoAtt[1].split(":");
+        		 novoPreco = preco[0] + ":" + produtoEditar.getPreco() + ";";
+        	 }
+        	 if(!produtoEditar.getUnidade().isEmpty()){
+        		 String[] unidade = produtoEditadoAtt[2].split(":");
+        		 novaUnidade = unidade[0] + ":" + produtoEditar.getUnidade() + ";";
+        	 }
+        	 if(produtoEditar.getQuantidade() != null){
+        		 String [] quantidade = produtoEditadoAtt[3].split(":");
+        		 novaQuantidade = quantidade[0] + ":" + produtoEditar.getQuantidade() + ";";
+        	 }
+        	 
+        	 if(!novoPreco.isEmpty() && novoPreco != null){
+            	 novoProdutoEditado = produtoEditadoAtt[0] + ";" + novoPreco;
+        	 }else{
+        		 novoProdutoEditado = produtoEditadoAtt[0] + ";" + produtoEditadoAtt[1];
+        	 }
+        	 
+        	 if(!novaQuantidade.isEmpty() && novaQuantidade != null){
+        		 novoProdutoEditado = novoProdutoEditado + novaQuantidade;
+        	 }else{
+        		 novoProdutoEditado = novoProdutoEditado + produtoEditadoAtt[2];
+        	 }
+        	
+        	 if(!novaUnidade.isEmpty() && novaUnidade != null){
+        		 novoProdutoEditado = novoProdutoEditado + novaUnidade;
+        	 }else{
+        		 novoProdutoEditado = novoProdutoEditado + produtoEditadoAtt[3];
+        	 }
+        	
+        	 String[] txtEditado = txt.replaceAll(produtoEditado + "-", novoProdutoEditado + "-").split("-");
+        	 
+        	 if(txtEditado != null){
+        		 for(int i = 0; i < txtEditado.length; i++){
+            		 arquivo.write(txtEditado[i] + "\r\n");
+            	 }
+        	 }
+        	 
         	 arquivo.close();
-        	 adicionaProduto.Escrever(produtoEditar);
         	 
         	 out.println("<html>");
              out.println("<body>");
-             out.println("<p>O produto " + produtoEditadoNome + "</p>");
+             out.println("<p>O produto " + produtoEditadoNome + " foi editado com sucesso</p>");
+             out.println("<div><a href='/TrabPoo/editaProduto.html'>Editar Outro</a></div>");
              out.println("<div><a href='/TrabPoo/produto.html'>Voltar</a></div>");
              out.println("</body>");
              out.println("</html>");

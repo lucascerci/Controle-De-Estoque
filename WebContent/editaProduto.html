@@ -1,19 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+ .inputDados {
+ 	margin-bottom: 10px;
+ }
+ body {
+ 	text-align: center;
+ }
+</style>
 <meta charset="ISO-8859-1">
 <title>Edita Produto</title>
 </head>
 <body>
 	 <body>
-            <form action="editaProduto">
-                 Nome: <input type="text" name="nome" /><br />
-                 Preco: <input type="text" name="preco" /><br />
-                 Unidade: <input type="text" name="unidade" /><br />
-                 Quantidade: <input type="text" name="quantidade" /><br />
-
-                 <input type="submit" />
-              </form>
-        </body>
+	 	<h2>PRODUTO - EDITAR PRODUTO </h2>
+	 	<p style="font-size: 10px; margin-top: -12px;">Para editar um produto, você deve digitar o nome de um produto já cadastrado.</p>
+		 <div>
+		 <form action="editaProduto">
+	   				 <div>
+		   				 Nome Do Produto: <input type="text" name="nome" class="inputDados" /><br />
+		   				 <div>
+		   				 	<h4>Atributos que deseja alterar: </h4>
+			   				 Preco: <input type="text" name="preco" class="inputDados" /><br />
+			                 Unidade: <input type="text" name="unidade" class="inputDados" /><br />
+			                 Quantidade: <input type="text" name="quantidade"/><br />
+		   				 </div>
+	   				 </div>
+	                 <input style="margin-top: 20px;" type="submit" />
+	                 <a type="button" href="/TrabPoo/produto.html">Voltar</a>
+	        </form>
+		 </div>
+      </body>
 </body>
 </html>

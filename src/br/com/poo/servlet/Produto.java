@@ -1,10 +1,12 @@
 package br.com.poo.servlet;
 
+
 public class Produto {
 	 private String nome;
-     private double preco;
+     private Double preco;
      private String unidade;
-     private int quantidade;
+     private Integer quantidade;
+     private Integer quantidadeAtual;
 	
      public String getNome() {
 		return nome;
@@ -12,10 +14,10 @@ public class Produto {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public double getPreco() {
+	public Double getPreco() {
 		return preco;
 	}
-	public void setPreco(double preco) {
+	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
 	public String getUnidade() {
@@ -24,11 +26,17 @@ public class Produto {
 	public void setUnidade(String unidade) {
 		this.unidade = unidade;
 	}
-	public int getQuantidade() {
+	public Integer getQuantidade() {
 		return quantidade;
 	}
-	public void setQuantidade(int quantidade) {
+	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
+	}
+	public Integer getQuantidadeAtual() {
+		return quantidadeAtual;
+	}
+	public void setQuantidadeAtual(Integer quantidadeAtual) {
+		this.quantidadeAtual = quantidadeAtual;
 	}
 	
 }

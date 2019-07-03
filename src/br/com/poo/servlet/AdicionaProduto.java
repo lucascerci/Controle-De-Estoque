@@ -23,46 +23,83 @@ public class AdicionaProduto extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private File arquivo;
-	
-	 protected void service(HttpServletRequest request,	
+ 	Produto produto = new Produto();
+ 	String erro = null;
+	 
+ 	protected void service(HttpServletRequest request,	
              HttpServletResponse response)
              throws IOException, ServletException {
 
          PrintWriter out = response.getWriter();
-
-         // pegando os par�metros do request
-         String nome = request.getParameter("nome");
-         String preco = request.getParameter("preco");
-         String unidade = request.getParameter("unidade");
-         String quantidade = request.getParameter("quantidade");
-
-         // fazendo a convers�o da data
-
-         // monta um objeto contato
-     	Produto produto = new Produto();
-        produto.setNome(nome);
-        produto.setPreco(Double.parseDouble(preco));
-        produto.setUnidade(unidade);
-        produto.setQuantidade(Integer.parseInt(quantidade));
+         
+         if(!request.getParameter("nome").isEmpty()) {
+             String nome = request.getParameter("nome");
+             produto.setNome(nome);
+         } else {
+        	 erro = "O nome não pode ser nulo";
+         }
+         
+         if(!request.getParameter("preco").isEmpty()) {
+             String preco = request.getParameter("preco");
+             produto.setPreco(Double.parseDouble(preco));
+         } else {
+        	 if(erro != null) {
+        		 erro = erro + " || O preço não pode ser nulo";
+        	 } else {
+        		 erro = "O preço não pode ser nulo";
+        	 }
+         }
+         
+         if(!request.getParameter("unidade").isEmpty()) {
+             String unidade = request.getParameter("unidade");
+             produto.setUnidade(unidade);
+         } else {
+        	 if(erro != null) {
+            	 erro = erro + " || A unidade não pode ser nula";
+        	 } else {
+        		 erro = "A unidade não pode ser nula";
+        	 }
+        	 
+         }
+         
+         if(!request.getParameter("quantidade").isEmpty()) {
+             String quantidade = request.getParameter("quantidade");
+             produto.setQuantidade(Integer.parseInt(quantidade));
+         } else {
+        	 if(erro != null) {
+        		 erro = erro + " || A quantidade não pode ser nula";
+        	 }else {
+        		 erro = "A quantidade não pode ser nula";
+        	 }
+         }
        
-        if(this.Escrever(produto)){
-        	 out.println("<html>");
-             out.println("<body>");
-             out.println("Contato " + produto.getNome() +
-                     " adicionado com sucesso");    
-             out.println("<div><a href='/TrabPoo/produto.html'>Voltar</a></div>");
-             out.println("</body>");
-             out.println("</html>");
-        }else{
-        	 out.println("<html>");
-             out.println("<body>");
-             out.println("Contato " + produto.getNome() +
-                     " n�o foi adicionado, devido a um erro nao tratado.");   
-             out.println("<div><a href='/TrabPoo/produto.html'>Voltar</a></div>");
-             out.println("</body>");
-             out.println("</html>");
+        if(erro == null) {
+        	if(this.Escrever(produto)){
+           	 out.println("<html>");
+                out.println("<body style='text-align: center; margin-top: 15%;'>");
+                out.println("Produto " + produto.getNome() +
+                        " adicionado com sucesso");    
+                out.println("<div><a href='/TrabPoo/adicionaProduto.html'>Adicionar Outro</a></div>");
+                out.println("<div><a href='/TrabPoo/produto.html'>Voltar</a></div>");
+                out.println("</body>");
+                out.println("</html>");
+           }else{
+           	 out.println("<html>");
+                out.println("<body>");
+                out.println("Produto " + produto.getNome() +
+                        " nao foi adicionado, devido a um erro nao tratado.");   
+                out.println("<div><a href='/TrabPoo/produto.html'>Voltar</a></div>");
+                out.println("</body>");
+                out.println("</html>");
+           }
+        }else {
+        	out.println("<html>");
+            out.println("<body>");
+            out.println("Erro ao cadastrar um produto: " + erro);    
+            out.println("<div><a href='/TrabPoo/produto.html'>Voltar</a></div>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        
      }
 	 
 	 public Boolean Escrever(Produto produto) {

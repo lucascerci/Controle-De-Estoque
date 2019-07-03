@@ -23,4 +23,14 @@
      	<servlet-name>servletEdita</servlet-name>
         <servlet-class>br.com.poo.servlet.EditaProduto</servlet-class>
      </servlet>
+     
+     <servlet>
+     	<servlet-name>servletRemove</servlet-name>
+        <servlet-class>br.com.poo.servlet.RemoveProduto</servlet-class>
+     </servlet>
+     
+     <servlet>
+     	<servlet-name>servletDownload</servlet-name>
+        <servlet-class>br.com.poo.servlet.BaixaRelatorio</servlet-class>
+     </servlet>
 </web-app>
