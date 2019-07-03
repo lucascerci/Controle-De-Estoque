@@ -38,4 +38,9 @@
      	<servlet-name>servletFinancas</servlet-name>
         <servlet-class>br.com.poo.servlet.Financas</servlet-class>
      </servlet>
+     
+     <servlet>
+     	<servlet-name>servletSaida</servlet-name>
+        <servlet-class>br.com.poo.servlet.Saida</servlet-class>
+     </servlet>
 </web-app>
