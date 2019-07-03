@@ -79,7 +79,7 @@ public class AdicionaProduto extends HttpServlet {
                 out.println("<body style='text-align: center; margin-top: 15%;'>");
                 out.println("Produto " + produto.getNome() +
                         " adicionado com sucesso");    
-                out.println("<div><a href='/TrabPoo/adicionaProduto.html'>Adicionar Outro</a></div>");
+                out.println("<div><a href='/TrabPoo/inclusaoProduto.html'>Adicionar Outro</a></div>");
                 out.println("<div><a href='/TrabPoo/produto.html'>Voltar</a></div>");
                 out.println("</body>");
                 out.println("</html>");

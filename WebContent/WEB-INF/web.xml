@@ -33,4 +33,9 @@
      	<servlet-name>servletDownload</servlet-name>
         <servlet-class>br.com.poo.servlet.BaixaRelatorio</servlet-class>
      </servlet>
+     
+     <servlet>
+     	<servlet-name>servletFinancas</servlet-name>
+        <servlet-class>br.com.poo.servlet.Financas</servlet-class>
+     </servlet>
 </web-app>

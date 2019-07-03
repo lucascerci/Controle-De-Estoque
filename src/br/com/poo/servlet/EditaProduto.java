@@ -106,7 +106,7 @@ public class EditaProduto extends HttpServlet {
         		 String [] preco = produtoEditadoAtt[1].split(":");
         		 novoPreco = preco[0] + ":" + produtoEditar.getPreco() + ";";
         	 }
-        	 if(!produtoEditar.getUnidade().isEmpty()){
+        	 if(produtoEditar.getUnidade() != null){
         		 String[] unidade = produtoEditadoAtt[2].split(":");
         		 novaUnidade = unidade[0] + ":" + produtoEditar.getUnidade() + ";";
         	 }
@@ -115,19 +115,19 @@ public class EditaProduto extends HttpServlet {
         		 novaQuantidade = quantidade[0] + ":" + produtoEditar.getQuantidade() + ";";
         	 }
         	 
-        	 if(!novoPreco.isEmpty() && novoPreco != null){
+        	 if(novoPreco != null){
             	 novoProdutoEditado = produtoEditadoAtt[0] + ";" + novoPreco;
         	 }else{
         		 novoProdutoEditado = produtoEditadoAtt[0] + ";" + produtoEditadoAtt[1];
         	 }
         	 
-        	 if(!novaQuantidade.isEmpty() && novaQuantidade != null){
+        	 if(novaQuantidade != null){
         		 novoProdutoEditado = novoProdutoEditado + novaQuantidade;
         	 }else{
         		 novoProdutoEditado = novoProdutoEditado + produtoEditadoAtt[2];
-        	 }
+        	 }	
         	
-        	 if(!novaUnidade.isEmpty() && novaUnidade != null){
+        	 if(novaUnidade != null){
         		 novoProdutoEditado = novoProdutoEditado + novaUnidade;
         	 }else{
         		 novoProdutoEditado = novoProdutoEditado + produtoEditadoAtt[3];
@@ -137,7 +137,9 @@ public class EditaProduto extends HttpServlet {
         	 
         	 if(txtEditado != null){
         		 for(int i = 0; i < txtEditado.length; i++){
-            		 arquivo.write(txtEditado[i] + "\r\n");
+        			 if(txtEditado[i] != produtoEditado){
+        				 arquivo.write(txtEditado[i] + "\r\n");
+        			 }
             	 }
         	 }
         	 

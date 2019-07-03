@@ -29,6 +29,7 @@ public class BuscaProduto extends HttpServlet {
 	List lista;
 	String produtoPesquisado = null;
 	String nome;
+	Boolean produtoAchado = false;
 	
 	protected void doGet(HttpServletRequest request,	
             HttpServletResponse response)
@@ -55,11 +56,14 @@ public class BuscaProduto extends HttpServlet {
         	 				String [] produtoAtributos = produto.split(";");
         	 				if(produtoAtributos != null && produtoAtributos.length != 0){
         	 					String[] nomeProduto = produtoAtributos[0].toString().split(":");
-                	        	if(nomeProduto[1] != null && nomeProduto[1].equals(nome)){
-                	        		produtoPesquisado = produto;
-                	        	}else {
-                	        		produtoPesquisado = "Não foi encontrado esse produto no banco.";
-                	        	}
+        	 					if(!produtoAchado){
+        	 						if(nomeProduto[1] != null && nomeProduto[1].equals(nome)){
+                    	        		produtoPesquisado = produto;
+                    	        		produtoAchado = true;
+                    	        	}else {
+                    	        		produtoPesquisado = "Não foi encontrado esse produto no banco.";
+                    	        	}
+        	 					}
         	 				}
         	 			}
         	 		}
@@ -70,7 +74,7 @@ public class BuscaProduto extends HttpServlet {
 	    	out.println("<html>");
 	        out.println("<body>");
 	        out.println("<p>" + produtoPesquisado + "</p>");
-	        out.println("<div><a href='/TrabPoo/consultaProduto.html'>Consultar Outro</a></div>");
+	        out.println("<div><a href='/TrabPoo/consultaProdutos.html'>Consultar Outro</a></div>");
             out.println("<div><a href='/TrabPoo/produto.html'>Voltar</a></div>");
 	        out.println("</body>");
 	        out.println("</html>");
